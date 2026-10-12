@@ -4,6 +4,7 @@ inventario = {
 }
 def mostrar_inventario():
     print("\n--- INVENTARIO ---")
+    productos_bajos = []
 
     for codigo, producto in inventario.items():
         print("Codigo:", codigo)
@@ -11,6 +12,11 @@ def mostrar_inventario():
         print("Precio: $", producto["precio"])
         print("Cantidad:", producto["cantidad"])
         print()
+        if producto["cantidad"] <= 5:
+            productos_bajos.append(producto["nombre"])
+
+    if productos_bajos:
+        print("Productos con pocas unidades:", productos_bajos)
 
 
 def modificar_producto():
