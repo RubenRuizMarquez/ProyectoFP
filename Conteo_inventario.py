@@ -36,6 +36,11 @@ def modificar_producto():
 
 def agregar_producto():
     codigo = int(input("Ingresa el codigo del nuevo producto: "))
+
+    if codigo in inventario:
+        print("Ese codigo ya existe. Usa la opcion de modificar producto.")
+        return
+
     nombre = input("Ingresa el nombre: ")
     precio = float(input("Ingresa el precio: "))
     cantidad = int(input("Ingresa la cantidad: "))
