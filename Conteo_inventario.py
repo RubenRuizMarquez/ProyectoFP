@@ -1,7 +1,14 @@
+from datetime import date
+
+
+fecha_registro = input("Ingresa la fecha en que se registra el inventario (DD/MM/AAAA): ")
+
 inventario = {
-    1: {"nombre": "Cafe", "precio": 35, "cantidad": 10},
-    2: {"nombre": "Refresco", "precio": 25, "cantidad": 15}
+    1: {"nombre": "Cafe", "precio": 35, "cantidad": 10, "fecha_cambio": fecha_registro},
+    2: {"nombre": "Refresco", "precio": 25, "cantidad": 15, "fecha_cambio": fecha_registro}
 }
+
+
 def mostrar_inventario():
     print("\n--- INVENTARIO ---")
     productos_bajos = []
@@ -11,6 +18,7 @@ def mostrar_inventario():
         print("Producto:", producto["nombre"])
         print("Precio: $", producto["precio"])
         print("Cantidad:", producto["cantidad"])
+        print("Fecha del ultimo registro o cambio:", producto["fecha_cambio"])
         print()
         if producto["cantidad"] <= 5:
             productos_bajos.append(producto["nombre"])
@@ -28,8 +36,10 @@ def modificar_producto():
 
         inventario[codigo]["nombre"] = nuevo_nombre
         inventario[codigo]["precio"] = nuevo_precio
+        inventario[codigo]["fecha_cambio"] = date.today().strftime("%d/%m/%Y")
 
         print("Producto modificado correctamente.")
+        print("Fecha del cambio:", inventario[codigo]["fecha_cambio"])
     else:
         print("Ese codigo no existe.")
 
@@ -48,10 +58,12 @@ def agregar_producto():
     inventario[codigo] = {
         "nombre": nombre,
         "precio": precio,
-        "cantidad": cantidad
+        "cantidad": cantidad,
+        "fecha_cambio": date.today().strftime("%d/%m/%Y")
     }
 
     print("Producto agregado correctamente.")
+    print("Fecha de registro:", inventario[codigo]["fecha_cambio"])
 
 
 def realizar_venta():
@@ -66,9 +78,11 @@ def realizar_venta():
 
             if cantidad > 0 and cantidad <= inventario[codigo]["cantidad"]:
                 inventario[codigo]["cantidad"] -= cantidad
+                inventario[codigo]["fecha_cambio"] = date.today().strftime("%d/%m/%Y")
                 subtotal = cantidad * inventario[codigo]["precio"]
                 total += subtotal
                 print("Producto agregado a la venta. Subtotal: $", subtotal)
+                print("Fecha del cambio en inventario:", inventario[codigo]["fecha_cambio"])
             else:
                 print("La cantidad no es valida o no hay suficiente inventario.")
         else:
